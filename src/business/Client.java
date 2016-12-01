@@ -1,5 +1,9 @@
 package business;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Client {
 
 	private int id;
@@ -8,10 +12,10 @@ public class Client {
 	private int age;
 	private ClientGender gender;
 	private ClientCategory category;
-	private String checkIn;
-	private String checkOut;
+	private Date checkIn;
+	private Date checkOut;
 
-	public Client(int id, String name, String cpf, int age, ClientGender gender, ClientCategory category, String check_in, String check_out) {
+	public Client(int id, String name, String cpf, int age, ClientGender gender, ClientCategory category, Date check_in, Date check_out) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,24 +51,26 @@ public class Client {
 		return this.category;
 	}
 
-	public String getCheckIn() {
+	public Date getCheckIn() {
 		return this.checkIn;
 	}
 
-	public String getCheckOut() {
+	public Date getCheckOut() {
 		return this.checkOut;
 	}
 
 	@Override
 	public String toString() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		return "Id: " + this.id + "\n" +
 				"Nome: " + this.name + "\n" +
 				"CPF: " + this.cpf + "\n" +
 				"Idade: " + this.age + "\n" +
 				"Gênero: " + this.gender + "\n" +
 				"Categoria: " + this.category + "\n" +
-				"Entrada: " + this.checkIn + "\n" +
-				"Saída: " + this.checkOut;
+				"Entrada: " + dateFormat.format(this.checkIn) + "\n" +
+				"Saída: " + dateFormat.format(this.checkOut);
 	}
 
 }

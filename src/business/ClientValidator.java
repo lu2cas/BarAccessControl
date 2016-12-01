@@ -1,15 +1,15 @@
 package business;
 
 public class ClientValidator {
-	private static ClientValidator cv = null;
+	private static ClientValidator clientValidator = null;
 
 	private ClientValidator() {}
 
 	public static ClientValidator getInstance() {
-		if (cv == null) {
-			cv = new ClientValidator();
+		if (clientValidator == null) {
+			clientValidator = new ClientValidator();
 		}
-		return cv;
+		return clientValidator;
 	}
 
 	public boolean isValidName(String name) {
