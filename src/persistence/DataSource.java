@@ -16,13 +16,17 @@ public class DataSource {
 
 	private Connection connection;
 
-	private DataSource() throws SQLException, ClassNotFoundException {
-		String url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database;
-		Class.forName(this.driver);
-		this.connection = DriverManager.getConnection(url, this.user, this.password);
+	private DataSource() throws DataSourceException {
+		try {
+			String url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database;
+			Class.forName(this.driver);
+			this.connection = DriverManager.getConnection(url, this.user, this.password);
+		} catch (Exception e) {
+			throw new DataSourceException(e.getMessage());
+		}
 	}
 
-	public static DataSource getInstance() throws SQLException, ClassNotFoundException {
+	public static DataSource getInstance() throws DataSourceException {
 		if (dataSource == null) {
 			dataSource = new DataSource();
 		}
