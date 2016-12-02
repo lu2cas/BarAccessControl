@@ -1,5 +1,7 @@
 package graphic_interface;
 
+import javax.swing.text.MaskFormatter;
+
 public class DataFormat {
 	public static String upperCaseWords(String givenString) {
 		String[] arr = givenString.split(" ");
@@ -12,4 +14,13 @@ public class DataFormat {
 		return sb.toString().trim();
 	}
 
+	public static String formatCpf(String cpf) {
+		try {
+			MaskFormatter mf = new MaskFormatter("###.###.###-##");
+			mf.setValueContainsLiteralCharacters(false);
+			return mf.valueToString(cpf);
+		} catch (Exception e) {
+			return cpf;
+		}
+	}
 }

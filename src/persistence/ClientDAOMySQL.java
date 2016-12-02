@@ -19,9 +19,9 @@ public class ClientDAOMySQL implements ClientDAO {
 
 	private DateFormat dateFormat;
 
-	private String checkInFile = "files/check_in_file.txt";
+	private String checkInFilePath = "files" + File.separator + "check_in_file.txt";
 
-	private String checkOutFile = "files/check_out_file.txt";
+	private String checkOutFilePath = "files" + File.separator + "check_out_file.txt";
 
 	public ClientDAOMySQL() {
 		try {
@@ -302,7 +302,7 @@ public class ClientDAOMySQL implements ClientDAO {
 		}
 
 		try {
-			this.writeFile(this.checkInFile, client);
+			this.writeFile(this.checkInFilePath, client);
 	
 			result = true;
 		} catch (Exception e) {
@@ -334,7 +334,7 @@ public class ClientDAOMySQL implements ClientDAO {
 
 		boolean record_result = false;
 		try {
-			this.writeFile(this.checkOutFile, this.getClient(cpf, false));
+			this.writeFile(this.checkOutFilePath, this.getClient(cpf, false));
 	
 			record_result = true;
 		} catch (Exception e) {
@@ -344,10 +344,13 @@ public class ClientDAOMySQL implements ClientDAO {
 		return update_result && record_result;
 	}
 
-	private void writeFile(String file, Client client) throws Exception {
-		File f = new File(file);
-
-		FileWriter fw = new FileWriter(file, f.exists());
+	private void writeFile(String file_path, Client client) throws Exception {
+		File file = new File(file_path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs(); 
+			file.createNewFile();
+		}
+		FileWriter fw = new FileWriter(file_path, true);
 
 		fw.append(client.toString());
 		fw.append("\n");

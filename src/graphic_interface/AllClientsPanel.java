@@ -47,7 +47,7 @@ public class AllClientsPanel extends JPanel {
 				data[i] = new Object[] {
 					Integer.toString(client.getId()),
 					DataFormat.upperCaseWords(client.getName()),
-					String.format("xxx.xxx.xxx-xx", client.getCpf()),
+					DataFormat.formatCpf(client.getCpf()),
 					client.getFormattedGender(),
 					client.getFormattedCategory()
 				};
