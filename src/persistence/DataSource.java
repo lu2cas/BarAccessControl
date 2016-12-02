@@ -2,7 +2,6 @@ package persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DataSource {
 	/*private String host = "mysql.lu2cas.com.br";
@@ -43,4 +42,5 @@ public class DataSource {
 	public Connection getConnection() {
 		return this.connection;
 	}
+
 }

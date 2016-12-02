@@ -14,6 +14,8 @@ import business.*;
 import persistence.ClientDAOMySQL;
 
 public class CheckInPanel extends JPanel {
+	private static final long serialVersionUID = -346931351128829805L;
+
 	private JLabel lblName;
 	private JLabel lblCpf;
 	private JLabel lblAge;
@@ -139,4 +141,5 @@ public class CheckInPanel extends JPanel {
 		comboGender.setSelectedIndex(0);
 		comboCategory.setSelectedIndex(0);
 	}
+
 }

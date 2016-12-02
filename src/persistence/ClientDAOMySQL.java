@@ -1,5 +1,6 @@
 package persistence;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -344,11 +345,13 @@ public class ClientDAOMySQL implements ClientDAO {
 	}
 
 	private void writeFile(String file, Client client) throws Exception {
-		FileWriter fw = new FileWriter(file, true);
+		File f = new File(file);
+
+		FileWriter fw = new FileWriter(file, f.exists());
 
 		fw.append(client.toString());
 		fw.append("\n");
-		fw.append("--------------------------------------------------------------------------------");
+		fw.append("-------------------------------------------------------------------------------");
 		fw.append("\n");
 
 		fw.close();

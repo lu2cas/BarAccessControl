@@ -1,21 +1,19 @@
 package graphic_interface;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import business.*;
+import business.ClientCategory;
+import business.ClientGender;
 import persistence.ClientDAOMySQL;
 
 public class ResumePanel extends JPanel {
+	private static final long serialVersionUID = -156208088503839407L;
+
 	private JLabel lblTotalClients;
 	private JLabel lblGenderDistribution;
 	private JLabel lblMenPercent;
@@ -33,9 +31,6 @@ public class ResumePanel extends JPanel {
 	private JTextField textFieldGoldPercent;
 	private JTextField textFieldPlatinumPercent;
 	private JTextField textFieldNotVipPercent;
-
-	private JButton btnClear;
-	private JButton btnCheckIn;
 
 	public ResumePanel() {}
 

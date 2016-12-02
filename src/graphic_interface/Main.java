@@ -10,13 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
 public class Main extends JFrame {
+	private static final long serialVersionUID = 4802513481396152139L;
 
 	private JPanel contentPane;
 
@@ -26,9 +25,6 @@ public class Main extends JFrame {
 	private ClientByCpfPanel panelClientByCpf;
 	private ResumePanel panelResume;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,9 +38,6 @@ public class Main extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Main() {
 
 		setResizable(false);
@@ -165,4 +158,5 @@ public class Main extends JFrame {
 		contentPane.revalidate();
 		contentPane.repaint();
 	}
+
 }

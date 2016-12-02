@@ -2,8 +2,6 @@ package graphic_interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,14 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import business.*;
 import persistence.ClientDAOMySQL;
-import persistence.DAOException;
 
 public class ClientByCpfPanel extends JPanel {
+	private static final long serialVersionUID = 2910004492718431440L;
+
 	private JTable clientByCpfTable;
 
 	private JScrollPane scrollPane;
@@ -31,7 +28,8 @@ public class ClientByCpfPanel extends JPanel {
 	private JButton btnClear;
 	private JButton btnSearch;
 
-	public ClientByCpfPanel() {}
+	public ClientByCpfPanel() {
+	}
 
 	public void makeForm() {
 		this.removeAll();
@@ -65,16 +63,9 @@ public class ClientByCpfPanel extends JPanel {
 		});
 		this.add(btnSearch);
 
+		String[] column_names = {"Id", "Nome", "CPF", "Gênero", "Categoria"};
 
-		String[] column_names = {
-			"Id",
-			"Nome",
-			"CPF",
-			"Gênero",
-			"Categoria"
-		};
-
-		Object [][] data = new Object [1][5];
+		Object[][] data = new Object[1][5];
 
 		data[0] = new Object[] {"", "", "", "", ""};
 
@@ -88,7 +79,6 @@ public class ClientByCpfPanel extends JPanel {
 
 		scrollPane = new JScrollPane(clientByCpfTable);
 		scrollPane.setBounds(30, 85, 540, 39);
-
 
 		clientByCpfTable.setFillsViewportHeight(true);
 
@@ -108,40 +98,16 @@ public class ClientByCpfPanel extends JPanel {
 			client = clientDAOMySQL.getClient(cpf_target, true);
 
 			if (client != null) {
-	
 				String[] data = new String[5];
-	
-				String category = "";
-				if (client.getCategory() != null) {
-					category = toTitleCase(client.getCategory().toString().toLowerCase());
-				}
-	
-				String gender = "";
-				if (client.getGender() == ClientGender.FEMALE) {
-					gender = "Feminino";
-				} else if (client.getGender() == ClientGender.MALE) {
-					gender = "Masculino";
-				}
-	
-				String cpf = "";
-				try {
-					MaskFormatter mf;
-					mf = new MaskFormatter("AAA.AAA.AAA-AA");
-					mf.setValueContainsLiteralCharacters(false);
-					cpf = mf.valueToString(client.getCpf());
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
-				
-	
+
 				data = new String[] {
 					Integer.toString(client.getId()),
-					toTitleCase(client.getName()),
-					cpf,
-					gender,
-					category
+					DataFormat.upperCaseWords(client.getName()),
+					String.format("xxx.xxx.xxx-xx", client.getCpf()),
+					client.getFormattedGender(),
+					client.getFormattedCategory()
 				};
-	
+
 				for (int i = 0; i < data.length; i++) {
 					clientByCpfTable.getModel().setValueAt(data[i], 0, i);
 				}
@@ -160,14 +126,4 @@ public class ClientByCpfPanel extends JPanel {
 		}
 	}
 
-	public static String toTitleCase(String givenString) {
-		String[] arr = givenString.split(" ");
-		StringBuffer sb = new StringBuffer();
-	
-		for (int i = 0; i < arr.length; i++) {
-			sb.append(Character.toUpperCase(arr[i].charAt(0)))
-			.append(arr[i].substring(1)).append(" ");
-		}
-		return sb.toString().trim();
-	} 
 }

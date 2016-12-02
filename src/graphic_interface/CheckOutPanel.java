@@ -9,10 +9,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import business.*;
 import persistence.ClientDAOMySQL;
 
 public class CheckOutPanel extends JPanel {
+	private static final long serialVersionUID = -9022918436904378672L;
+
 	private JLabel lblCpf;
 
 	private JTextField textFieldCpf;
@@ -70,4 +71,5 @@ public class CheckOutPanel extends JPanel {
 	protected void do_btnClear_actionPerformed(ActionEvent e) {
 		textFieldCpf.setText("");
 	}
+
 }

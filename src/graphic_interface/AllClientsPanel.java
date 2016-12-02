@@ -6,12 +6,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.text.MaskFormatter;
 
 import business.*;
 import persistence.ClientDAOMySQL;
 
 public class AllClientsPanel extends JPanel {
+	private static final long serialVersionUID = 6804975934529384642L;
+
 	private JTable allClientsTable;
 
 	private JScrollPane scrollPane;
@@ -43,28 +44,12 @@ public class AllClientsPanel extends JPanel {
 			for (int i = 0; i < clients.size(); i++) {
 				client = clients.get(i);
 
-				String category = "";
-				if (client.getCategory() != null) {
-					category = toTitleCase(client.getCategory().toString().toLowerCase());
-				}
-
-				String gender = "";
-				if (client.getGender() == ClientGender.FEMALE) {
-					gender = "Feminino";
-				} else if (client.getGender() == ClientGender.MALE) {
-					gender = "Masculino";
-				}
-
-				MaskFormatter mf = new MaskFormatter("AAA.AAA.AAA-AA");
-				mf.setValueContainsLiteralCharacters(false);
-				String cpf = mf.valueToString(client.getCpf());
-
 				data[i] = new Object[] {
 					Integer.toString(client.getId()),
-					toTitleCase(client.getName()),
-					cpf,
-					gender,
-					category
+					DataFormat.upperCaseWords(client.getName()),
+					String.format("xxx.xxx.xxx-xx", client.getCpf()),
+					client.getFormattedGender(),
+					client.getFormattedCategory()
 				};
 			}
 
@@ -87,14 +72,4 @@ public class AllClientsPanel extends JPanel {
 		}
 	}
 
-	public static String toTitleCase(String givenString) {
-		String[] arr = givenString.split(" ");
-		StringBuffer sb = new StringBuffer();
-	
-		for (int i = 0; i < arr.length; i++) {
-			sb.append(Character.toUpperCase(arr[i].charAt(0)))
-			.append(arr[i].substring(1)).append(" ");
-		}
-		return sb.toString().trim();
-	} 
 }

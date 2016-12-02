@@ -4,8 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Client {
+import graphic_interface.DataFormat;
 
+public class Client {
 	private Integer id;
 	private String name;
 	private String cpf;
@@ -71,7 +72,26 @@ public class Client {
 		return this.checkOut;
 	}
 
-	@Override
+	public String getFormattedGender() {
+		String gender = "";
+
+		if (this.getGender() == ClientGender.FEMALE) {
+			gender = "Feminino";
+		} else if (this.getGender() == ClientGender.MALE) {
+			gender = "Masculino";
+		}
+		return gender;
+	}
+
+	public String getFormattedCategory() {
+		String category = "";
+
+		if (this.getCategory() != null) {
+			category = DataFormat.upperCaseWords(this.getCategory().toString().toLowerCase());
+		}
+		return category;
+	}
+
 	public String toString() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
