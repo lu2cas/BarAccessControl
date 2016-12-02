@@ -11,7 +11,7 @@ public class Main {
 
 			ClientDAOMySQL clientDAOMySQL= new ClientDAOMySQL();
 
-			/*Client client = new Client("Francisco dos Santos", "45645645645", 2, ClientGender.MALE, ClientCategory.PLATINUM, new Date());
+			/*Client client = new Client("Salomão Silveira", "65465465465", 56, ClientGender.MALE, ClientCategory.GOLD, new Date());
 			System.out.println(clientDAOMySQL.insertClient(client));*/
 
 			//System.out.println(clientDAOMySQL.getClient("45645645645"));
@@ -34,6 +34,8 @@ public class Main {
 			//System.out.println(clientDAOMySQL.getClientsRelationByGender(true));
 
 			//System.out.println(clientDAOMySQL.getClientsRelationByCategory(false));
+
+			//System.out.println(clientDAOMySQL.checkOut("12312312312"));
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}

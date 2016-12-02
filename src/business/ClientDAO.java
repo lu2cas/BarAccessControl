@@ -13,4 +13,6 @@ public interface ClientDAO {
 	public ArrayList<Client> getClientsByCategory(ClientCategory category, boolean presents_only) throws DAOException;
 	public HashMap<String, Double> getClientsRelationByGender(boolean presents_only) throws DAOException;
 	public HashMap<String, Double> getClientsRelationByCategory(boolean presents_only) throws DAOException;
+	public boolean checkIn(String cpf) throws DAOException;
+	public boolean checkOut(String cpf) throws DAOException;
 }

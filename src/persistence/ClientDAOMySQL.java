@@ -1,5 +1,6 @@
 package persistence;
 
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,10 @@ public class ClientDAOMySQL implements ClientDAO {
 
 	private DateFormat dateFormat;
 
+	private String checkInFile = "files/check_in_file.txt";
+
+	private String checkOutFile = "files/check_out_file.txt";
+
 	public ClientDAOMySQL() {
 		try {
 			this.connection = DataSource.getInstance().getConnection();
@@ -33,7 +38,7 @@ public class ClientDAOMySQL implements ClientDAO {
 			throw new DAOException("Já existe um cliente cadastrado com este CPF!");
 		} 
 
-		int result = 0;
+		boolean result_insert = false;
 
 		try {
 			String sql = "INSERT INTO clients(name, cpf, age, gender, category, check_in) VALUES(?, ?, ?, ?, ?, ?)";
@@ -50,15 +55,14 @@ public class ClientDAOMySQL implements ClientDAO {
 			command.setString(5, category);
 			command.setString(6, this.dateFormat.format(client.getCheckIn()));
 
-			result = command.executeUpdate();
+			result_insert = command.executeUpdate() == 1;
 		} catch (Exception e) {
-			throw new DAOException("Falha na inserção de cliente! " + e.getMessage());
+			throw new DAOException("Falha na inserção de cliente!");
 		}
 
-		if (result == 0) {
-			return false;
-		}
-		return true;
+		boolean result_record = this.checkIn(client.getCpf());
+
+		return result_insert && result_record;
 	}
 
 	@Override
@@ -96,7 +100,7 @@ public class ClientDAOMySQL implements ClientDAO {
 				);
 			}
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca de cliente por CPF! " + e.getMessage());
+			throw new DAOException("Falha na busca de cliente por CPF!");
 		}
 
 		return client;
@@ -142,7 +146,7 @@ public class ClientDAOMySQL implements ClientDAO {
 				);
 			}
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca por todos os clientes! " + e.getMessage());
+			throw new DAOException("Falha na busca por todos os clientes!");
 		}
 
 		return clients;
@@ -190,7 +194,7 @@ public class ClientDAOMySQL implements ClientDAO {
 				);
 			}
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca de clientes por gênero! " + e.getMessage());
+			throw new DAOException("Falha na busca de clientes por gênero!");
 		}
 
 		return clients;
@@ -233,7 +237,7 @@ public class ClientDAOMySQL implements ClientDAO {
 				);
 			}
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca de clientes por categoria! " + e.getMessage());
+			throw new DAOException("Falha na busca de clientes por categoria!");
 		}
 
 		return clients;
@@ -253,7 +257,7 @@ public class ClientDAOMySQL implements ClientDAO {
 			clientsRelationByGender.put(ClientGender.MALE.toString(), male_percent);
 			clientsRelationByGender.put(ClientGender.FEMALE.toString(), female_percent);
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca de relação de clientes por categoria! " + e.getMessage());
+			throw new DAOException("Falha na busca de relação de clientes por categoria!");
 		}
 
 		return clientsRelationByGender;
@@ -279,9 +283,72 @@ public class ClientDAOMySQL implements ClientDAO {
 			clientsRelationByCategory.put(ClientCategory.PLATINUM.toString(), platinum_percent);
 			clientsRelationByCategory.put("NOT_VIP", not_vip_percent);
 		} catch (Exception e) {
-			throw new DAOException("Falha na busca de relação de clientes por categoria! " + e.getMessage());
+			throw new DAOException("Falha na busca de relação de clientes por categoria!");
 		}
 
 		return clientsRelationByCategory;
+	}
+
+	public boolean checkIn(String cpf) throws DAOException {
+		boolean result = false;
+
+		Client client = this.getClient(cpf);
+
+		if (client == null || client.getCheckOut() != null) {
+			throw new DAOException("O cliente não está no bar!");
+		}
+
+		try {
+			this.writeFile(this.checkInFile, client);
+	
+			result = true;
+		} catch (Exception e) {
+			throw new DAOException("Falha ao gravar arquivo de check in!");
+		}
+
+		return result;
+	}
+
+	public boolean checkOut(String cpf) throws DAOException {
+		boolean update_result = false;
+
+		Client client = this.getClient(cpf);
+
+		if (client == null || client.getCheckOut() != null) {
+			throw new DAOException("O cliente não está no bar!");
+		}
+
+		try {
+			String sql = "UPDATE clients SET check_out = NOW() WHERE cpf = ?";
+			PreparedStatement command = this.connection.prepareStatement(sql);
+
+			command.setString(1, cpf);
+
+			update_result = command.executeUpdate() == 1;
+		} catch (Exception e) {
+			throw new DAOException("Falha no check out do cliente!");
+		}
+
+		boolean record_result = false;
+		try {
+			this.writeFile(this.checkOutFile, this.getClient(cpf));
+	
+			record_result = true;
+		} catch (Exception e) {
+			throw new DAOException("Falha ao gravar arquivo de check out!");
+		}
+
+		return update_result && record_result;
+	}
+
+	private void writeFile(String file, Client client) throws Exception {
+		FileWriter fw = new FileWriter(file, true);
+
+		fw.append(client.toString());
+		fw.append("\n");
+		fw.append("--------------------------------------------------------------------------------");
+		fw.append("\n");
+
+		fw.close();
 	}
 }

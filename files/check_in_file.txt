@@ -1,0 +1,9 @@
+Id: 5
+Nome: Salomão Silveira
+CPF: 65465465465
+Idade: 56
+Gênero: MALE
+Categoria: GOLD
+Entrada: 2016-12-01 22:50:55
+Saída: null
+--------------------------------------------------------------------------------
