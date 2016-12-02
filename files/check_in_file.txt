@@ -7,3 +7,48 @@ Categoria: GOLD
 Entrada: 2016-12-01 22:50:55
 Saída: null
 --------------------------------------------------------------------------------
+Id: 6
+Nome: Maria de Lourdes Silveira
+CPF: 56756756756
+Idade: 53
+Gênero: FEMALE
+Categoria: SILVER
+Entrada: 2016-12-02 02:12:03
+Saída: null
+--------------------------------------------------------------------------------
+Id: 7
+Nome: Abgail Chiochetta
+CPF: 09809809809
+Idade: 26
+Gênero: FEMALE
+Categoria: SILVER
+Entrada: 2016-12-02 02:19:28
+Saída: null
+--------------------------------------------------------------------------------
+Id: 10
+Nome: Marcos Silva
+CPF: 12312312312
+Idade: 25
+Gênero: MALE
+Categoria: null
+Entrada: 2016-12-02 02:32:04
+Saída: null
+--------------------------------------------------------------------------------
+Id: 11
+Nome: Laura Amaral
+CPF: 87687687687
+Idade: 32
+Gênero: FEMALE
+Categoria: null
+Entrada: 2016-12-02 02:33:47
+Saída: null
+--------------------------------------------------------------------------------
+Id: 12
+Nome: Luccas Silveira
+CPF: 12312312312
+Idade: 23
+Gênero: MALE
+Categoria: SILVER
+Entrada: 2016-12-02 02:44:17
+Saída: null
+--------------------------------------------------------------------------------
