@@ -18,6 +18,7 @@ public class Main extends JFrame {
 
 	private CheckInPanel panelCheckIn;
 	private CheckOutPanel panelCheckOut;
+	private AllClientsPanel panelAllClients;
 
 	/**
 	 * Launch the application.
@@ -83,18 +84,60 @@ public class Main extends JFrame {
 		});
 		mnClients.add(mntmCheckOut);
 
+		JMenu mnQueries = new JMenu("Consultas");
+		menuBar.add(mnQueries);
+
+		JMenuItem mntmAllClients = new JMenuItem("Todos os clientes");
+		mntmAllClients.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_mntmAllClients_actionPerformed(e);
+			}
+		});
+		mnQueries.add(mntmAllClients);
+
+		JMenuItem mntmClientByCpf = new JMenuItem("Cliente por CPF");
+		mntmClientByCpf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_mntmClientByCpf_actionPerformed(e);
+			}
+		});
+		mnQueries.add(mntmClientByCpf);
+
+		JMenuItem mntmResume = new JMenuItem("Resumo");
+		mntmResume.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_mntmResume_actionPerformed(e);
+			}
+		});
+		mnQueries.add(mntmResume);
+
 		panelCheckIn = new CheckInPanel();
-		panelCheckIn.makeForm();
 
 		panelCheckOut = new CheckOutPanel();
-		panelCheckOut.makeForm();
+
+		panelAllClients = new AllClientsPanel();
 	}
 
 	protected void do_mntmCheckIn_actionPerformed(ActionEvent e) {
+		panelCheckIn.makeForm();
 		changePanel(panelCheckIn);
 	}
 
 	protected void do_mntmCheckOut_actionPerformed(ActionEvent e) {
+		panelCheckOut.makeForm();
+		changePanel(panelCheckOut);
+	}
+
+	protected void do_mntmAllClients_actionPerformed(ActionEvent e) {
+		panelAllClients.makeForm();
+		changePanel(panelAllClients);
+	}
+
+	protected void do_mntmClientByCpf_actionPerformed(ActionEvent e) {
+		changePanel(panelCheckOut);
+	}
+
+	protected void do_mntmResume_actionPerformed(ActionEvent e) {
 		changePanel(panelCheckOut);
 	}
 

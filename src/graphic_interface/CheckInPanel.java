@@ -32,6 +32,8 @@ public class CheckInPanel extends JPanel {
 	public CheckInPanel() {}
 
 	public void makeForm() {
+		this.removeAll();
+
 		this.setBounds(0, 0, 600, 450);
 		this.setLayout(null);
 

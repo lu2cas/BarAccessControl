@@ -24,6 +24,8 @@ public class CheckOutPanel extends JPanel {
 	public CheckOutPanel() {}
 
 	public void makeForm() {
+		//this.removeAll();
+
 		this.setBounds(0, 0, 600, 450);
 		this.setLayout(null);
 
