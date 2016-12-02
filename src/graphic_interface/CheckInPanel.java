@@ -117,7 +117,7 @@ public class CheckInPanel extends JPanel {
 			category = ClientCategory.SILVER;
 		} else if (selected_category.equals("Gold")) {
 			category = ClientCategory.GOLD;
-		} else if (selected_category.equals("platinum")) {
+		} else if (selected_category.equals("Platinum")) {
 			category = ClientCategory.PLATINUM;
 		}
 	
