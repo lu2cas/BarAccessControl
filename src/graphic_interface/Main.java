@@ -19,6 +19,7 @@ public class Main extends JFrame {
 	private CheckInPanel panelCheckIn;
 	private CheckOutPanel panelCheckOut;
 	private AllClientsPanel panelAllClients;
+	private ClientByCpfPanel panelClientByCpf;
 
 	/**
 	 * Launch the application.
@@ -116,6 +117,8 @@ public class Main extends JFrame {
 		panelCheckOut = new CheckOutPanel();
 
 		panelAllClients = new AllClientsPanel();
+	
+		panelClientByCpf = new ClientByCpfPanel();
 	}
 
 	protected void do_mntmCheckIn_actionPerformed(ActionEvent e) {
@@ -134,7 +137,8 @@ public class Main extends JFrame {
 	}
 
 	protected void do_mntmClientByCpf_actionPerformed(ActionEvent e) {
-		changePanel(panelCheckOut);
+		panelClientByCpf.makeForm();
+		changePanel(panelClientByCpf);
 	}
 
 	protected void do_mntmResume_actionPerformed(ActionEvent e) {

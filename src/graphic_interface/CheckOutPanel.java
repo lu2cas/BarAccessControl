@@ -17,14 +17,13 @@ public class CheckOutPanel extends JPanel {
 
 	private JTextField textFieldCpf;
 
-
 	private JButton btnClear;
 	private JButton btnCheckOut;
 
 	public CheckOutPanel() {}
 
 	public void makeForm() {
-		//this.removeAll();
+		this.removeAll();
 
 		this.setBounds(0, 0, 600, 450);
 		this.setLayout(null);

@@ -2,6 +2,7 @@ package graphic_interface;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +27,8 @@ public class AllClientsPanel extends JPanel {
 		try {	
 			ClientDAOMySQL clientDAOMySQL = new ClientDAOMySQL();
 
+			ArrayList<Client> clients = clientDAOMySQL.getAllClients(true);
+
 			String[] column_names = {
 				"Id",
 				"Nome",
@@ -33,9 +36,6 @@ public class AllClientsPanel extends JPanel {
 				"Gênero",
 				"Categoria"
 			};
-
-
-			ArrayList<Client> clients = clientDAOMySQL.getAllClients(true);
 
 			Object [][] data = new Object [clients.size()][5];
 
@@ -61,7 +61,7 @@ public class AllClientsPanel extends JPanel {
 
 				data[i] = new Object[] {
 					Integer.toString(client.getId()),
-					client.getName(),
+					toTitleCase(client.getName()),
 					cpf,
 					gender,
 					category
@@ -83,7 +83,7 @@ public class AllClientsPanel extends JPanel {
 
 			this.add(scrollPane);
 		} catch (Exception e) {
-			System.out.println("FUBAR");
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 
