@@ -42,7 +42,7 @@ public class Main extends JFrame {
 		setResizable(false);
 		setTitle("Controle de acesso ao bar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 450);
+		setBounds(100, 100, 600, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -50,7 +50,7 @@ public class Main extends JFrame {
 
 		// Menu principal
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 494, 21);
+		menuBar.setBounds(0, 0, 600, 21);
 		contentPane.add(menuBar);
 
 		JMenu mnFile = new JMenu("Arquivo");

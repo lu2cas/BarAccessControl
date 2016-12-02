@@ -31,11 +31,10 @@ public class ClientDAOMySQL implements ClientDAO {
 		}
 	}
 
-	@Override
 	public boolean insertClient(Client client) throws DAOException {
-		Client client_check = this.getClient(client.getCpf());
+		Client client_check = this.getClient(client.getCpf(), true);
 		if (client_check != null && client_check.getCheckOut() == null) {
-			throw new DAOException("Já existe um cliente cadastrado com este CPF!");
+			throw new DAOException("Já existe um cliente com este CPF atualmente no bar!");
 		} 
 
 		boolean result_insert = false;
@@ -65,12 +64,18 @@ public class ClientDAOMySQL implements ClientDAO {
 		return result_insert && result_record;
 	}
 
-	@Override
-	public Client getClient(String cpf) throws DAOException {
+
+	public Client getClient(String cpf, boolean presents_only) throws DAOException {
 		Client client = null;
 
 		try {
-			String sql = "SELECT id, name, cpf, age, gender, category, check_in, check_out FROM clients WHERE cpf = ? LIMIT 1";
+			String sql = "SELECT id, name, cpf, age, gender, category, check_in, check_out FROM clients WHERE cpf = ?";
+			if (presents_only) {
+				sql += " AND check_out IS NULL";
+			}
+			sql += " ORDER BY check_in DESC";
+			sql += " LIMIT 1";
+
 			PreparedStatement command = this.connection.prepareStatement(sql);
 
 			command.setString(1, cpf);
@@ -106,7 +111,6 @@ public class ClientDAOMySQL implements ClientDAO {
 		return client;
 	}
 
-	@Override
 	public ArrayList<Client> getAllClients(boolean presents_only) throws DAOException{
 		ArrayList<Client> clients = new ArrayList<Client>();
 
@@ -152,7 +156,6 @@ public class ClientDAOMySQL implements ClientDAO {
 		return clients;
 	}
 
-	@Override
 	public ArrayList<Client> getClientsByGender(ClientGender gender, boolean presents_only) throws DAOException {
 		ArrayList<Client> clients = new ArrayList<Client>();
 
@@ -200,7 +203,6 @@ public class ClientDAOMySQL implements ClientDAO {
 		return clients;
 	}
 
-	@Override
 	public ArrayList<Client> getClientsByCategory(ClientCategory category, boolean presents_only) throws DAOException {
 		ArrayList<Client> clients = new ArrayList<Client>();
 
@@ -292,7 +294,7 @@ public class ClientDAOMySQL implements ClientDAO {
 	public boolean checkIn(String cpf) throws DAOException {
 		boolean result = false;
 
-		Client client = this.getClient(cpf);
+		Client client = this.getClient(cpf, false);
 
 		if (client == null || client.getCheckOut() != null) {
 			throw new DAOException("O cliente não está no bar!");
@@ -312,14 +314,14 @@ public class ClientDAOMySQL implements ClientDAO {
 	public boolean checkOut(String cpf) throws DAOException {
 		boolean update_result = false;
 
-		Client client = this.getClient(cpf);
+		Client client = this.getClient(cpf, true);
 
-		if (client == null || client.getCheckOut() != null) {
+		if (client == null) {
 			throw new DAOException("O cliente não está no bar!");
 		}
 
 		try {
-			String sql = "UPDATE clients SET check_out = NOW() WHERE cpf = ?";
+			String sql = "UPDATE clients SET check_out = NOW() WHERE cpf = ? AND check_out IS NULL";
 			PreparedStatement command = this.connection.prepareStatement(sql);
 
 			command.setString(1, cpf);
@@ -331,7 +333,7 @@ public class ClientDAOMySQL implements ClientDAO {
 
 		boolean record_result = false;
 		try {
-			this.writeFile(this.checkOutFile, this.getClient(cpf));
+			this.writeFile(this.checkOutFile, this.getClient(cpf, false));
 	
 			record_result = true;
 		} catch (Exception e) {

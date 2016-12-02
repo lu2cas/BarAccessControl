@@ -4,11 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.*;
+import persistence.ClientDAOMySQL;
 
 public class CheckInPanel extends JPanel {
 	private JLabel lblName;
@@ -20,8 +23,8 @@ public class CheckInPanel extends JPanel {
 	private JTextField textFieldName;
 	private JTextField textFieldCpf;
 	private JTextField textFieldAge;
-	private JTextField textFieldGender;
-	private JTextField textFieldCategory;
+	private JComboBox<String> comboGender;
+	private JComboBox<String> comboCategory;
 
 	private JButton btnClear;
 	private JButton btnCheckIn;
@@ -29,7 +32,7 @@ public class CheckInPanel extends JPanel {
 	public CheckInPanel() {}
 
 	public void makeForm() {
-		this.setBounds(0, 0, 500, 450);
+		this.setBounds(0, 0, 600, 450);
 		this.setLayout(null);
 
 		lblName = new JLabel("Nome");
@@ -60,20 +63,22 @@ public class CheckInPanel extends JPanel {
 		lblGender.setBounds(30, 175, 350, 20);
 		this.add(lblGender);
 
-		textFieldGender = new JTextField();
-		textFieldGender.setBounds(30, 195, 195, 20);
-		this.add(textFieldGender);
+		String[] genders = new String[] {"Masculino", "Feminino"};
+		comboGender = new JComboBox<String>(genders);
+		comboGender.setBounds(30, 195, 195, 20);
+		this.add(comboGender);
 
 		lblCategory = new JLabel("Categoria");
 		lblCategory.setBounds(30, 220, 350, 20);
 		this.add(lblCategory);
 
-		textFieldCategory = new JTextField();
-		textFieldCategory.setBounds(30, 240, 195, 20);
-		this.add(textFieldCategory);
+		String[] categories = new String[] {"", "Silver", "Gold", "Platinum"};
+		comboCategory = new JComboBox<String>(categories);
+		comboCategory.setBounds(30, 240, 195, 20);
+		this.add(comboCategory);
 
 		btnClear = new JButton("Limpar");
-		btnClear.setBounds(296, 378, 84, 23);
+		btnClear.setBounds(345, 385, 100, 23);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				do_btnClear_actionPerformed(e);
@@ -82,7 +87,7 @@ public class CheckInPanel extends JPanel {
 		this.add(btnClear);
 
 		btnCheckIn = new JButton("Check in");
-		btnCheckIn.setBounds(385, 378, 89, 23);
+		btnCheckIn.setBounds(455, 385, 105, 23);
 		btnCheckIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				do_btnCheckIn_actionPerformed(e);
@@ -95,15 +100,41 @@ public class CheckInPanel extends JPanel {
 		String name = textFieldName.getText();
 		String cpf = textFieldCpf.getText();
 		String age = textFieldAge.getText();
-		String gender = textFieldGender.getText();
-		String category = textFieldCategory.getText();
+		String selected_gender = comboGender.getSelectedItem().toString();
+		String selected_category = comboCategory.getSelectedItem().toString();
+
+		ClientGender gender = null;
+		if (selected_gender.equals("Feminino")) {
+			gender = ClientGender.FEMALE;
+		} else if (selected_gender.equals("Masculino")) {
+			gender = ClientGender.MALE;
+		}
+
+		ClientCategory category = null;
+		if (selected_category.equals("Silver")) {
+			category = ClientCategory.SILVER;
+		} else if (selected_category.equals("Gold")) {
+			category = ClientCategory.GOLD;
+		} else if (selected_category.equals("platinum")) {
+			category = ClientCategory.PLATINUM;
+		}
+	
+		try {
+			Client client = new Client(name, cpf, Integer.parseInt(age), gender, category);
+			ClientDAOMySQL clientDAOMySQL = new ClientDAOMySQL();
+			clientDAOMySQL.insertClient(client);
+			btnClear.doClick();
+			JOptionPane.showMessageDialog(null, "Check in registrado com sucesso!");
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
 	}
 
 	protected void do_btnClear_actionPerformed(ActionEvent e) {
 		textFieldName.setText("");
 		textFieldCpf.setText("");
 		textFieldAge.setText("");
-		textFieldGender.setText("");
-		textFieldCategory.setText("");
+		comboGender.setSelectedIndex(0);
+		comboCategory.setSelectedIndex(0);
 	}
 }

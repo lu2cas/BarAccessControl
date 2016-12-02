@@ -7,7 +7,7 @@ import persistence.DAOException;
 
 public interface ClientDAO {
 	public boolean insertClient(Client client) throws DAOException;
-	public Client getClient(String cpf) throws DAOException;
+	public Client getClient(String cpf, boolean presents_only) throws DAOException;
 	public ArrayList<Client> getAllClients(boolean presents_only) throws DAOException;
 	public ArrayList<Client> getClientsByGender(ClientGender gender, boolean presents_only) throws DAOException;
 	public ArrayList<Client> getClientsByCategory(ClientCategory category, boolean presents_only) throws DAOException;

@@ -35,8 +35,8 @@ public class Client {
 		this.checkOut = check_out;
 	}
 
-	public Client(String name, String cpf, int age, ClientGender gender, ClientCategory category, Date check_in) {
-		this(null, name, cpf, age, gender, category, check_in, null);
+	public Client(String name, String cpf, int age, ClientGender gender, ClientCategory category) {
+		this(null, name, cpf, age, gender, category, new Date(), null);
 	}
 
 	public int getId() {
