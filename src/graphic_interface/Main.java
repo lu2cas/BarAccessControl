@@ -1,12 +1,16 @@
 package graphic_interface;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,6 +24,7 @@ public class Main extends JFrame {
 	private CheckOutPanel panelCheckOut;
 	private AllClientsPanel panelAllClients;
 	private ClientByCpfPanel panelClientByCpf;
+	private ResumePanel panelResume;
 
 	/**
 	 * Launch the application.
@@ -41,6 +46,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+
 		setResizable(false);
 		setTitle("Controle de acesso ao bar");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,6 +55,9 @@ public class Main extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height/2 - this.getSize().height / 2);
 
 		// Menu principal
 		JMenuBar menuBar = new JMenuBar();
@@ -119,6 +128,8 @@ public class Main extends JFrame {
 		panelAllClients = new AllClientsPanel();
 	
 		panelClientByCpf = new ClientByCpfPanel();
+
+		panelResume = new ResumePanel();
 	}
 
 	protected void do_mntmCheckIn_actionPerformed(ActionEvent e) {
@@ -142,7 +153,8 @@ public class Main extends JFrame {
 	}
 
 	protected void do_mntmResume_actionPerformed(ActionEvent e) {
-		changePanel(panelCheckOut);
+		panelResume.makeForm();
+		changePanel(panelResume);
 	}
 
 	private void changePanel(JPanel panel) {

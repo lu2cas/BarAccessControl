@@ -76,13 +76,7 @@ public class ClientByCpfPanel extends JPanel {
 
 		Object [][] data = new Object [1][5];
 
-		data[0] = new Object[] {
-			"",
-			"",
-			"",
-			"",
-			""
-		};
+		data[0] = new Object[] {"", "", "", "", ""};
 
 		clientByCpfTable = new JTable(data, column_names);
 
@@ -93,7 +87,7 @@ public class ClientByCpfPanel extends JPanel {
 		clientByCpfTable.getColumnModel().getColumn(4).setPreferredWidth(60);
 
 		scrollPane = new JScrollPane(clientByCpfTable);
-		scrollPane.setBounds(30, 85, 540, 38);
+		scrollPane.setBounds(30, 85, 540, 39);
 
 
 		clientByCpfTable.setFillsViewportHeight(true);

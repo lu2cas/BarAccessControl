@@ -77,7 +77,7 @@ public class AllClientsPanel extends JPanel {
 			allClientsTable.getColumnModel().getColumn(4).setPreferredWidth(60);
 
 			scrollPane = new JScrollPane(allClientsTable);
-			scrollPane.setBounds(10, 30, 580, 410);
+			scrollPane.setBounds(10, 30, 575, 385);
 
 			allClientsTable.setFillsViewportHeight(true);
 

@@ -16,9 +16,9 @@ public class Main {
 
 			//System.out.println(clientDAOMySQL.getClient("45645645645"));
 
-			for (Client client : clientDAOMySQL.getAllClients(true)) {
+			/*for (Client client : clientDAOMySQL.getAllClients(true)) {
 				System.out.println(client);
-			}
+			}*/
 
 			/*for (Client client : clientDAOMySQL.getClientsByGender(ClientGender.MALE, true)) {
 				System.out.println(client);
